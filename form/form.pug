@@ -1,0 +1,83 @@
+html
+    head
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        style
+            include ./form.css
+    body
+        .maximum
+            .frame 
+                .title
+                    .variant(title="Вариант") 6
+                    .big-one КОМАНДА БЕЗРУКОВА
+                    .small-one Безруков Колегов Полегайко Бобык
+                .left-big
+                    .left-top#p
+                        .menu#bp
+                            .menu-button#bp0(selected="selected", -data-pages="p i10") 1
+                            .menu-button#bp1(-data-pages="p i10") 2
+                            .menu-button#bp2(-data-pages="p i10") 3
+                            .menu-button#bp3(-data-pages="p i10") 4
+
+                        .container#p0
+                            h1 Метод верхней релаксации
+                            .input-title N x M
+                            input#an.half-l(type="text", value="8")
+                            input#am.half-r(type="text", value="8")
+                            .input-title Количество итераций
+                            input#amax(type="text", value="1000")
+                            .input-title Минимальная погрешность
+                            input#aeps(type="text", value="0.001")
+                            input#afunc(type="hidden" value="Math.abs(x-y)")
+
+                            input#am1(type="hidden" value="Math.sin(Math.PI*y)*Math.sin(Math.PI*y)")
+                            input#am2(type="hidden" value="x * (1 - x )")
+                            input#am3(type="hidden" value="Math.abs(Math.exp(Math.sin(Math.PI*y))- 1 )")
+                            input#am4(type="hidden" value="x * (1 - x) * Math.exp(x)")
+
+                            input#aa(type="hidden" value="0")
+                            input#ab(type="hidden" value="0")
+                            input#ac(type="hidden" value="1")
+                            input#ad(type="hidden" value="2")
+
+                            .button#z1 Запуск
+                        .container#p1.none
+                            h1 Метод простой итерации
+                        .container#p2.none
+                            h1 Метод сопряженных градиентов
+                        .container#p3.none
+                            h1 Нестандартная область
+
+                    .left-bottom#i
+                        .menu#bi
+                            .menu-button#bi10(selected="selected",  -data-pages="i") i
+                            .menu-button#bi20(-data-pages="i") D
+                        .container#i10
+                            .container#i100
+                                h1 Метод верхней релаксации
+                                p Набор формул и текста
+                            .container#i101.none
+                                h1 Метод простой итерации
+                                p Набор формул и текста
+                            .container#i102.none
+                                h1 Метод сопряженных градиентов
+                                p Набор формул и текста
+                            .container#i103.none
+                                h1 Нестандартная область
+                                p Набор формул и текста
+                        .container#i20.none
+                            h1 Результаты
+                            #res
+
+                .right-big#r
+                    .menu#br.m-right
+                        .menu-button#br0(selected="selected",-data-pages="r") G
+                        .menu-button#br1(-data-pages="r") R
+                    .container#r0
+                        .chart#chart
+                    .container#r1.none
+                        .data
+                            .data-scroller#data
+
+        script
+            include ./form.js

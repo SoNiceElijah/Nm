@@ -1,0 +1,25 @@
+{
+  "name": "nm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "work1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoNiceElijah/nm.git"
+  },
+  "author": "SoNiceElijah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SoNiceElijah/nm/issues"
+  },
+  "homepage": "https://github.com/SoNiceElijah/nm#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "expression-eval": "^3.1.1",
+    "pug": "^2.0.4"
+  }
+}
