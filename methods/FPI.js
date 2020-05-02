@@ -7,7 +7,7 @@ function interface(ctx)
 {
     if(ctx.type == 'test')
     {
-        let r = SOR(ctx);
+        let r = FPI(ctx);
 
         let n = parseInt(ctx.n);
         let m = parseInt(ctx.m);
@@ -28,7 +28,7 @@ function interface(ctx)
     }        
     else
     {
-        let r1 = SOR(ctx);
+        let r1 = FPI(ctx);
 
         let n = parseInt(ctx.n);
         let m = parseInt(ctx.m);
@@ -36,7 +36,7 @@ function interface(ctx)
         ctx.n = n*2 + '';
         ctx.m = m*2 + '';
 
-        let r2 = SOR(ctx);
+        let r2 = FPI(ctx);
 
         let max = -100;
         for(let i = 1; i < m; ++i)
@@ -52,7 +52,7 @@ function interface(ctx)
     }
 }
 
-function SOR(ctx)
+function FPI(ctx)
 {    
     let {
         func, 
@@ -119,7 +119,7 @@ function SOR(ctx)
         xarr.push(i * h + a);
     }
 
-    let w = getOptimalW(h,k,{a,b,c,d});
+    let t = getOptimalT(h,k,n,m);
 
     let k2 = -1.0 / (k*k);
     let h2 = -1.0 / (h*h);
@@ -131,20 +131,30 @@ function SOR(ctx)
     while(num < max && mEps > eps)
     {
         mEps = 0;
+
+        let r = [];
+        for(let i = 1; i < n; ++i)
+        {
+            let line = [];
+            for(let j = 1; j < m; ++j)
+            {
+                let f = eval(af,{x : a + i * h, y : b + j * k, Math});
+                let num = a2 * v[i][j] + h2 * (v[i-1][j] + v[i+1][j]) + k2 * (v[i][j-1] + v[i][j+1]) + f;
+                line.push(num);
+            }
+
+            r.push(line);
+        }
+
         for(let j = 1; j < m; ++j)
         {
             for(let i = 1; i < n; ++i)
             {
                 let prev = v[i][j];
-
-                let f = eval(af,{x : a + i * h, y : b + j * k, Math});
-                v[i][j] = - w * (h2 * (v[i + 1][j] + v[i - 1][j]) + k2 * (v[i][j + 1] + v[i][j - 1]));
-                v[i][j] = v[i][j] + (1 - w)* a2 * prev + w *f;
-                v[i][j] = v[i][j] / a2;
+                v[i][j] = prev - t * r[i-1][j-1];                
 
                 let cEps = Math.abs(v[i][j] - prev);
-                if(mEps < cEps)
-                    mEps = cEps
+                mEps = Math.max(cEps,mEps);                
             }
         }
 
@@ -169,7 +179,7 @@ function SOR(ctx)
         stat: {
             num : { name : "Количество итераций", val : num},
             eps : { name : "Достигнутая точность", val : mEps.toExponential(3)},
-            w : {name : "Параметр w", val : w},
+            t : {name : "Параметр t", val : t},
         },
         chart : {
             x : xarr,
@@ -184,14 +194,13 @@ function SOR(ctx)
 
 }
 
-function getOptimalW(h,k,border)
+function getOptimalT(h,k,n,m)
 {
-    let {a,b,c,d} = border;
-    let p1 = Math.PI * h / (2 * (c - a));
-    let p2 = Math.PI * k / (2 * (d - b));
+    let lmin = 4.0 / (h*h) * Math.sin(Math.PI / (2 * n)) * Math.sin(Math.PI / (2 * n)) +
+        4.0 / (k*k) * Math.sin(Math.PI / (2*m)) * Math.sin(Math.PI / (2*m));
 
-    let a2 = h * h + k * k;
-    let l = 2 * k *k / a2 * Math.sin(p1) * Math.sin(p1) + 2 * h * h / a2 * Math.sin(p2) *Math.sin(p2);
-    return 2 / (1 + Math.sqrt(l * (2-l)));
+    let lmax = 4.0 / (h*h) * Math.sin(Math.PI * (n-1)/(2*n))* Math.sin(Math.PI * (n-1)/(2*n)) +
+        4.0 / (k*k) * Math.sin(Math.PI * (m-1)/(2*m))* Math.sin(Math.PI * (m-1)/(2*m));
+    
+    return 2.0 / (lmin + lmax);
 }
-

@@ -20,6 +20,10 @@ app.post('/run', async (req,res) => {
     {
         data = methods.sor(req.body);
     }
+    if(req.body.method == 'FPI')
+    {
+        data = methods.fpi(req.body);
+    }
 
     res.json(data);
 });

@@ -237,3 +237,20 @@ input.half-r {
     border-right: 1px solid #cdcdcd;
     border-bottom: 1px solid #cdcdcd;
 }
+
+.x1 {
+    color: #c04343;
+}
+
+.y1 {
+    color: #437bc4;
+}
+
+#i20 i{
+    text-decoration: underline;
+    color: #2855b6;
+}
+
+#i20{
+    color: #0c0c0c;
+}
