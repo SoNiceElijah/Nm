@@ -163,6 +163,10 @@ input.half-r {
     color: #292929;
 }
 
+.left-big .test {
+    bottom: 70px !important;
+}
+
 .menu {
     position: absolute;
     left: -30px;

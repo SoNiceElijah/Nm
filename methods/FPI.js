@@ -7,6 +7,7 @@ function interface(ctx)
 {
     if(ctx.type == 'test')
     {
+        ctx.func = '-(' + ctx.func + ')';
         let r = FPI(ctx);
 
         let n = parseInt(ctx.n);
@@ -67,7 +68,7 @@ function FPI(ctx)
         n, 
         m, 
         eps, 
-        max
+        max,
     } = ctx;
 
     a = parseFloat(a);
@@ -119,7 +120,12 @@ function FPI(ctx)
         xarr.push(i * h + a);
     }
 
-    let t = getOptimalT(h,k,n,m);
+    let t = parseFloat(ctx.t);
+    if(t == 0)
+    {
+        t = getOptimalT(h,k,n,m);
+    }
+   
 
     let k2 = -1.0 / (k*k);
     let h2 = -1.0 / (h*h);

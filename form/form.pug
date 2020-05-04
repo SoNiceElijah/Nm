@@ -14,14 +14,48 @@ html
                 .left-big
                     .left-top#p
                         .menu#bp
-                            .menu-button#bp0(selected="selected", -data-pages="p i10") 1
-                            .menu-button#bp1(-data-pages="p i10") 2
-                            .menu-button#bp2(-data-pages="p i10") 3
-                            .menu-button#bp3(-data-pages="p i10") 4
-                            .menu-button#bp4(-data-pages="p i10") T
+                            .menu-button#bp0(selected="selected", -data-pages="p i10") H
+                            .menu-button#bp1(-data-pages="p i10") 1
+                            .menu-button#bp2(-data-pages="p i10") 2
+                            .menu-button#bp3(-data-pages="p i10") 3
+                            .menu-button#bp4(-data-pages="p i10") 4
+                            .menu-button#bp5(-data-pages="p i10") ?
+                            .menu-button#bp6(-data-pages="p i10") ?
+                            .menu-button#bp7(-data-pages="p i10") ?
+
+
+                        //real function
+                        input#rfunc(type="hidden" value="Math.abs(x-y)")
+
+                        input#rm1(type="hidden" value="Math.sin(Math.PI*y)*Math.sin(Math.PI*y)")
+                        input#rm2(type="hidden" value="x * (1 - x )")
+                        input#rm3(type="hidden" value="Math.abs(Math.exp(Math.sin(Math.PI*y))- 1 )")
+                        input#rm4(type="hidden" value="x * (1 - x) * Math.exp(x)")
+
+                        input#ra(type="hidden" value="0")
+                        input#rb(type="hidden" value="0")
+                        input#rc(type="hidden" value="1")
+                        input#rd(type="hidden" value="2")
+                        input#rtype(type="hidden", value="real")
+
+                        //test function
+                        input#efunc(type="hidden" value="4")
+
+                        input#em1(type="hidden" value="1 - x*x - y*y")
+                        input#em2(type="hidden" value="1 - x*x - y*y")
+                        input#em3(type="hidden" value="1 - x*x - y*y")
+                        input#em4(type="hidden" value="1 - x*x - y*y")
+
+                        input#ea(type="hidden" value="-1")
+                        input#eb(type="hidden" value="-1")
+                        input#ec(type="hidden" value="1")
+                        input#ed(type="hidden" value="1")
+
+                        input#etype(type="hidden", value="test")
+                        input#ereal(type="hidden", value="1 - x*x - y*y")
 
                         .container#p0
-                            h1 Метод верхней релаксации
+                            h1 Параметры
                             .input-title N x M
                             input#an.half-l(type="text", value="8")
                             input#am.half-r(type="text", value="8")
@@ -29,102 +63,64 @@ html
                             input#amax(type="text", value="1000")
                             .input-title Минимальная погрешность
                             input#aeps(type="text", value="0.001")
-                            input#afunc(type="hidden" value="Math.abs(x-y)")
-
-                            input#am1(type="hidden" value="Math.sin(Math.PI*y)*Math.sin(Math.PI*y)")
-                            input#am2(type="hidden" value="x * (1 - x )")
-                            input#am3(type="hidden" value="Math.abs(Math.exp(Math.sin(Math.PI*y))- 1 )")
-                            input#am4(type="hidden" value="x * (1 - x) * Math.exp(x)")
-
-                            input#aa(type="hidden" value="0")
-                            input#ab(type="hidden" value="0")
-                            input#ac(type="hidden" value="1")
-                            input#ad(type="hidden" value="2")
-
-                            input#atype(type="hidden", value="real")
-                            input#areal(type="hidden", value="x + y")
-
-                            .button#z1 Запуск
+                            
+                            .button#z1 Далее
                         
                         .container#p1.none
-                            h1 Метод простой итерации
-                            .input-title N x M
-                            input#bn.half-l(type="text", value="8")
-                            input#bm.half-r(type="text", value="8")
-                            .input-title Количество итераций
-                            input#bmax(type="text", value="1000")
-                            .input-title Минимальная погрешность
-                            input#beps(type="text", value="0.001")
-                            input#bfunc(type="hidden" value="Math.abs(x-y)")
+                            h1 Метод верхней релаксации
 
-                            input#bm1(type="hidden" value="Math.sin(Math.PI*y)*Math.sin(Math.PI*y)")
-                            input#bm2(type="hidden" value="x * (1 - x )")
-                            input#bm3(type="hidden" value="Math.abs(Math.exp(Math.sin(Math.PI*y))- 1 )")
-                            input#bm4(type="hidden" value="x * (1 - x) * Math.exp(x)")
+                            .input-title Параметр W
+                            input#w(type="text", value="0.0")
 
-                            input#ba(type="hidden" value="0")
-                            input#bb(type="hidden" value="0")
-                            input#bc(type="hidden" value="1")
-                            input#bd(type="hidden" value="2")
+                            p Если параметр установлен на 0, то используется оптимальное значение
 
-                            input#btype(type="hidden", value="real")
-                            input#breal(type="hidden", value="x + y")
-
+                            .button.test#z20 Тест
                             .button#z2 Запуск
                         
                         .container#p2.none
-                            h1 Метод сопряженных градиентов
-                        
+                            h1 Метод простой итерации
+
+                            .input-title Параметр T
+                            input#t(type="text", value="0.0")
+
+                            p Если параметр установлен на 0, то используется оптимальное значение                     
+
+                            .test.button#z30 Тест
+                            .button#z3 Запуск
+
                         .container#p3.none
-                            h1 Нестандартная область
+                            h1 Метод сопряженных градиентов
+
+                            p Дополнительных параметров не требуется
+
+                            .test.button#z40 Тест
+                            .button#z4 Запуск
                             
                         .container#p4.none
-                            h1 Тестовая задача (МВР)
-                            .input-title N x M
-                            input#en.half-l(type="text", value="8")
-                            input#em.half-r(type="text", value="8")
-                            .input-title Количество итераций
-                            input#emax(type="text", value="1000")
-                            .input-title Минимальная погрешность
-                            input#eeps(type="text", value="0.001")
-                            input#efunc(type="hidden" value="4")
+                            h1 Нестандартная область
 
-                            input#em1(type="hidden" value="- y*y")
-                            input#em2(type="hidden" value="-x*x")
-                            input#em3(type="hidden" value="-y*y")
-                            input#em4(type="hidden" value="-x*x")
+                            p Размер сетки вычисляются из параметров N и M по формулам 6 + 3*N и 6 + 3*M
 
-                            input#ea(type="hidden" value="-1")
-                            input#eb(type="hidden" value="-1")
-                            input#ec(type="hidden" value="1")
-                            input#ed(type="hidden" value="1")
+                            .button#z5 Запуск
 
-                            input#etype(type="hidden", value="test")
-                            input#ereal(type="hidden", value="1 - x*x - y*y")
+                        .container#p5.none
+                            h1 Основная задача
 
-                            .button#z4 Запуск
+                            p Формулы
+
+                        .container#p6.none
+                            h1 Тестовая задача
+
+                            p Формулы
+
+
+                        .container#p7.none
+                            h1 Область
+
+                            p Картинка 
 
                     .left-bottom#i
-                        .menu#bi
-                            .menu-button#bi10(selected="selected",  -data-pages="i") i
-                            .menu-button#bi20(-data-pages="i") D
-                        .container#i10
-                            .container#i100
-                                h1 Метод верхней релаксации
-                                p Набор формул и текста
-                            .container#i101.none
-                                h1 Метод простой итерации
-                                p Набор формул и текста
-                            .container#i102.none
-                                h1 Метод сопряженных градиентов
-                                p Набор формул и текста
-                            .container#i103.none
-                                h1 Нестандартная область
-                                p Набор формул и текста
-                            .container#i104.none
-                                h1 Нестандартная область
-                                p Набор формул и текста
-                        .container#i20.none
+                        .container#i20
                             h1 Результаты
                             #res
 

@@ -1,4 +1,43 @@
-let data = {};
+let data;
+let realData = {
+    an : '',
+    am : '',
+    amax : '',
+    aeps : '',
+    rfunc : '',
+
+    rm1 : '',
+    rm2 : '',
+    rm3 : '',
+    rm4 : '',
+
+    ra : '',
+    rb : '',
+    rc : '',
+    rd : '',
+
+    rtype : ''
+};
+let testData = {  
+    an : '',
+    am : '',
+    amax : '',
+    aeps : '',
+    efunc : '',
+
+    em1 : '',
+    em2 : '',
+    em3 : '',
+    em4 : '',
+
+    ea : '',
+    eb : '',
+    ec : '',
+    ed : '',
+
+    etype : '',
+    ereal : ''
+};
 
 const layout = {
     title: 'График',
@@ -22,45 +61,93 @@ $('.menu-button').click((e) => {
         $('#' + g + ' .container').addClass('none');
         $('#' + g + '' + id).removeClass('none');
     }
-
-    let cls = str.substring(1,2);
-    if(cls === 'p')
-    {
-        data = {};
-        let docs = $('#' + gid[0] + '' + id + ' input');
-        docs.each((s) => {
-            data[docs[s].id] = '';
-        });
-    }
 });
 $('#bp0').click() ;
 
 $('#z1').click((e) => {
 
-    let values = {};
-    values['method'] = 'SOR';
-
-    run(values, 'z1');
+    $('#bp1').click() ;
 })
 
 $('#z2').click((e) => {
 
     let values = {};
-    values['method'] = 'FPI';
+    values['method'] = 'SOR';
+    values['w'] = $('#w').val();
+
+    data = realData;
 
     run(values, 'z2');
+})
+
+$('#z3').click((e) => {
+
+    let values = {};
+    values['method'] = 'FPI';
+    values['t'] = $('#t').val();
+
+    data = realData;
+
+    run(values, 'z3');
 })
 
 $('#z4').click((e) => {
 
     let values = {};
-    values['method'] = 'SOR';
+    values['method'] = 'CGM';
+
+    data = realData;
 
     run(values, 'z4');
 })
 
+$('#z5').click((e) => {
+
+    let values = {};
+    values['method'] = 'NSA';
+
+    data = testData;
+
+    run(values, 'z5');
+})
+
+$('#z20').click((e) => {
+
+    let values = {};
+    values['method'] = 'SOR';
+    values['w'] = $('#w').val();
+
+    data = testData;
+
+    run(values, 'z20');
+})
+
+$('#z30').click((e) => {
+
+    let values = {};
+    values['method'] = 'FPI';
+    values['t'] = $('#t').val();
+
+    data = testData;
+
+    run(values, 'z30');
+})
+
+$('#z40').click((e) => {
+
+    let values = {};
+    values['method'] = 'CGM';
+
+    data = testData;
+
+    run(values, 'z40');
+})
+
+
 function run(values, id)
 {
+
+    let text = $('#' + id).text();
     for(let param in data)
     {
         values[param.substring(1)] = $('#' + param).val();
@@ -81,7 +168,7 @@ function run(values, id)
         console.log(answer.info); 
 
         $('#' + id).removeAttr('loading');
-        $('#' + id).text('Запуск');
+        $('#' + id).text(text);
         
     })
 }

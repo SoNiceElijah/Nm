@@ -7,7 +7,8 @@ function interface(ctx)
 {
     if(ctx.type == 'test')
     {
-        let r = SOR(ctx);
+        ctx.func = '-(' + ctx.func + ')';
+        let r = CGM(ctx);
 
         let n = parseInt(ctx.n);
         let m = parseInt(ctx.m);
@@ -28,7 +29,7 @@ function interface(ctx)
     }        
     else
     {
-        let r1 = SOR(ctx);
+        let r1 = CGM(ctx);
 
         let n = parseInt(ctx.n);
         let m = parseInt(ctx.m);
@@ -36,7 +37,7 @@ function interface(ctx)
         ctx.n = n*2 + '';
         ctx.m = m*2 + '';
 
-        let r2 = SOR(ctx);
+        let r2 = CGM(ctx);
 
         let max = -100;
         for(let i = 1; i < m; ++i)
@@ -52,7 +53,7 @@ function interface(ctx)
     }
 }
 
-function SOR(ctx)
+function CGM(ctx)
 {    
     let {
         func, 
@@ -119,41 +120,94 @@ function SOR(ctx)
         xarr.push(i * h + a);
     }
 
-
-    let w = parseFloat(ctx.w);
-    if(w == 0)
-    {
-        w = getOptimalW(h,k,{a,b,c,d});
-    }
-
-    let k2 = -1.0 / (k*k);
-    let h2 = -1.0 / (h*h);
-    let a2 = -2.0 * (h2 + k2);
+    const k2 = -1.0 / (k*k);
+    const h2 = -1.0 / (h*h);
+    const a2 = -2.0 * (h2 + k2);
 
     let mEps = 100;
     let num = 0;
     let af = parse(func);
+
+    
+    let betta = 0;
+
+    let r = equation(v,func);
+    let z;
+    z = getZ(r,z);
+
+    let alpha = -dotProduct(z,z) / dotProduct(equation(z,'0'),z);
+
     while(num < max && mEps > eps)
     {
         mEps = 0;
-        for(let j = 1; j < m; ++j)
+
+        for(let i = 1; i < n; ++i)
         {
-            for(let i = 1; i < n; ++i)
+            for(let j = 1; j < m; ++j)
             {
                 let prev = v[i][j];
-
-                let f = eval(af,{x : a + i * h, y : b + j * k, Math});
-                v[i][j] = - w * (h2 * (v[i + 1][j] + v[i - 1][j]) + k2 * (v[i][j + 1] + v[i][j - 1]));
-                v[i][j] = v[i][j] + (1 - w)* a2 * prev + w *f;
-                v[i][j] = v[i][j] / a2;
+                v[i][j] = prev - alpha * z[i][j];
 
                 let cEps = Math.abs(v[i][j] - prev);
-                if(mEps < cEps)
-                    mEps = cEps
+                mEps = Math.max(cEps,mEps);
             }
         }
 
-        ++num;
+        num++;
+
+        r = equation(v,func);
+        let az = equation(z,'0');
+        betta = dotProduct(az,r) / dotProduct(az,z);
+
+        z = getZ(r,z);
+        az = equation(z,'0');
+
+        r = reverse(r);
+        alpha = -dotProduct(r,z) / dotProduct(az,z);
+        
+    }
+
+
+    function equation(left,right)
+    {
+        let aff = parse(right);
+        let res = [...left].map(l => l.map(e => 0));
+        for(let i = 1; i < n; ++i)
+        {
+            for(let j = 1; j < m; ++j)
+            {
+                let f = eval(aff,{x : a + i * h, y : b + j * k, Math});
+                res[i][j] = a2 * left[i][j] +
+                    h2 * (left[i-1][j] + left[i+1][j]) +
+                    k2 * (left[i][j-1] + left[i][j+1]) +
+                    f;
+    
+            }
+        }
+    
+        return res;
+    }
+
+    function getZ(left,right)
+    {
+        if(!right)
+            right = [...left].map(l => l.map(e => 0));
+
+        let res = [...left].map(l => l.map(e => 0));
+        for(let i = 0; i < n+1; ++i)
+        {
+            for(let j = 0; j < m +1; ++j)
+            {
+                res[i][j] = -left[i][j] + betta * right[i][j];
+            }
+        }
+
+        return res;
+    }
+
+    function reverse(arr)
+    {
+        return arr.map(l => l.map(e => -e));
     }
 
     let diff = -100;
@@ -174,7 +228,6 @@ function SOR(ctx)
         stat: {
             num : { name : "Количество итераций", val : num},
             eps : { name : "Достигнутая точность", val : mEps.toExponential(3)},
-            w : {name : "Параметр w", val : w},
         },
         chart : {
             x : xarr,
@@ -186,17 +239,25 @@ function SOR(ctx)
             diff
         }
     }
-
+    
 }
 
-function getOptimalW(h,k,border)
+function dotProduct(m1,m2)
 {
-    let {a,b,c,d} = border;
-    let p1 = Math.PI * h / (2 * (c - a));
-    let p2 = Math.PI * k / (2 * (d - b));
+    let res = 0;
+    for(let i = 0; i < m1.length; ++i)
+    {
+        for(let j = 0; j < m1[0].length; ++j)
+        {
+            res += m1[i][j] * m2[i][j];
+        }
+    }
 
-    let a2 = h * h + k * k;
-    let l = 2 * k *k / a2 * Math.sin(p1) * Math.sin(p1) + 2 * h * h / a2 * Math.sin(p2) *Math.sin(p2);
-    return 2 / (1 + Math.sqrt(l * (2-l)));
+    return res;
 }
+
+
+
+
+
 

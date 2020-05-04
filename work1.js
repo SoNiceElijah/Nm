@@ -24,6 +24,14 @@ app.post('/run', async (req,res) => {
     {
         data = methods.fpi(req.body);
     }
+    if(req.body.method == 'CGM')
+    {
+        data = methods.cgm(req.body);
+    }
+    if(req.body.method == 'NSA')
+    {
+        data = methods.nsa(req.body);
+    }
 
     res.json(data);
 });
