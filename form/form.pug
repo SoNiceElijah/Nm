@@ -4,6 +4,11 @@ html
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         style
             include ./form.css
+
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" ></script>
+
+        title Лабораторная работа
     body
         .maximum
             .frame 
@@ -39,20 +44,28 @@ html
                         input#rtype(type="hidden", value="real")
 
                         //test function
-                        input#efunc(type="hidden" value="4")
+                        input#efunc(type="hidden" value=`
+                            -((Math.exp(Math.pow(Math.sin(Math.PI*x*y),2)) *
+                            ((Math.PI*y)*(Math.PI*y)) * 
+                            ((Math.pow(Math.sin(2 * Math.PI * x * y),2)) + 2 * Math.cos(2 * Math.PI * x *y)))
+                            +
+                            (Math.exp(Math.pow(Math.sin(Math.PI*y*x),2)) *
+                            ((Math.PI*x)*(Math.PI*x)) * 
+                            ((Math.pow(Math.sin(2 * Math.PI * y * x),2)) + 2 * Math.cos(2 * Math.PI * y *x))))                      
+                        `)
 
-                        input#em1(type="hidden" value="1 - x*x - y*y")
-                        input#em2(type="hidden" value="1 - x*x - y*y")
-                        input#em3(type="hidden" value="1 - x*x - y*y")
-                        input#em4(type="hidden" value="1 - x*x - y*y")
+                        input#em1(type="hidden" value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
+                        input#em2(type="hidden" value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
+                        input#em3(type="hidden" value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
+                        input#em4(type="hidden" value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
 
-                        input#ea(type="hidden" value="-1")
-                        input#eb(type="hidden" value="-1")
+                        input#ea(type="hidden" value="0")
+                        input#eb(type="hidden" value="0")
                         input#ec(type="hidden" value="1")
-                        input#ed(type="hidden" value="1")
+                        input#ed(type="hidden" value="2")
 
                         input#etype(type="hidden", value="test")
-                        input#ereal(type="hidden", value="1 - x*x - y*y")
+                        input#ereal(type="hidden", value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
 
                         .container#p0
                             h1 Параметры
@@ -64,6 +77,12 @@ html
                             .input-title Минимальная погрешность
                             input#aeps(type="text", value="0.001")
                             
+
+                            .fiil-mode-switcher 
+                                .left-s-button#fillLeft <
+                                .fiil-mode-text#fiilMode нулевое
+                                .right-s-button#fillRight >
+
                             .button#z1 Далее
                         
                         .container#p1.none
@@ -106,18 +125,35 @@ html
                         .container#p5.none
                             h1 Основная задача
 
-                            p Формулы
+                            p \( \Delta u(x,y) = -f(x,y)   \)
+
+                            p \( x  = (a,b), y = (c,d) \)
+
+                            p \(a = 0, b = 1, c = 0, d = 2 \)
+                            p \( u(a,y) =  \sin^2(\pi y) \)
+                                |   \(u(b,y) = |e^{\sin(\pi y)}-1 |\)
+                                |   \(u(x,c) = x(1-x)\)
+                                |   \(u(x,d) = x(1-x) e^{x} \)
+
+                            p \( f(x,y) =  |x-y| \)
 
                         .container#p6.none
                             h1 Тестовая задача
 
-                            p Формулы
+                            p \( \Delta u(x,y) = -f(x,y)   \)
+
+                            p \( x  = (a,b), y = (c,d) \)
+
+                            p \(a = 0, b = 1, c = 0, d = 2 \)
+
+                            p \( u^{*}(x,y) = e^{\sin^2(\pi xy)} \)
 
 
                         .container#p7.none
                             h1 Область
 
-                            p Картинка 
+                            p 
+                                img.oblast(src="picture.png", alt="Картинка")
 
                     .left-bottom#i
                         .container#i20

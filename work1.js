@@ -13,6 +13,10 @@ app.get('/', async (req,res) => {
     res.render('form');
 });
 
+app.get('/picture.png', (req,res) => {
+    res.sendFile(__dirname + '/picture.png');
+})
+
 app.post('/run', async (req,res) => {
 
     let data = {};

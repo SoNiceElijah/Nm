@@ -46,6 +46,10 @@ const layout = {
     height: 560
 };
 
+const MODE = ["нулевое","интерполяция вдоль х","интерполяция вдоль у"];
+const MODE_T = ["null","interpolX","interpolY"];
+let selectedMode = 0;
+
 $('.menu-button').click((e) => {
 
 
@@ -73,6 +77,7 @@ $('#z2').click((e) => {
 
     let values = {};
     values['method'] = 'SOR';
+    values['fill'] = MODE_T[selectedMode];
     values['w'] = $('#w').val();
 
     data = realData;
@@ -84,6 +89,7 @@ $('#z3').click((e) => {
 
     let values = {};
     values['method'] = 'FPI';
+    values['fill'] = MODE_T[selectedMode];
     values['t'] = $('#t').val();
 
     data = realData;
@@ -95,6 +101,7 @@ $('#z4').click((e) => {
 
     let values = {};
     values['method'] = 'CGM';
+    values['fill'] = MODE_T[selectedMode];
 
     data = realData;
 
@@ -105,6 +112,7 @@ $('#z5').click((e) => {
 
     let values = {};
     values['method'] = 'NSA';
+    values['fill'] = MODE_T[selectedMode];
 
     data = testData;
 
@@ -115,6 +123,7 @@ $('#z20').click((e) => {
 
     let values = {};
     values['method'] = 'SOR';
+    values['fill'] = MODE_T[selectedMode];
     values['w'] = $('#w').val();
 
     data = testData;
@@ -126,6 +135,7 @@ $('#z30').click((e) => {
 
     let values = {};
     values['method'] = 'FPI';
+    values['fill'] = MODE_T[selectedMode];
     values['t'] = $('#t').val();
 
     data = testData;
@@ -137,12 +147,30 @@ $('#z40').click((e) => {
 
     let values = {};
     values['method'] = 'CGM';
+    values['fill'] = MODE_T[selectedMode];
 
     data = testData;
 
     run(values, 'z40');
 })
 
+
+
+
+$('#fillLeft').click(() => {
+    selectedMode -= 1;
+    selectedMode = selectedMode == -1 ? MODE.length-1 : selectedMode;
+
+    $('#fiilMode').html(MODE[selectedMode]);
+});
+
+
+$('#fillRight').click(() => {
+    selectedMode += 1;
+    selectedMode = selectedMode % MODE.length;
+
+    $('#fiilMode').html(MODE[selectedMode]);
+});
 
 function run(values, id)
 {

@@ -1,6 +1,8 @@
 const { parse, eval } = require('expression-eval');
 const transpose = require('./transpose');
 
+const getArray = require('./Fills');
+
 module.exports = interface;
 
 function interface(ctx)
@@ -69,6 +71,7 @@ function FPI(ctx)
         m, 
         eps, 
         max,
+        fill,
     } = ctx;
 
     a = parseFloat(a);
@@ -85,24 +88,16 @@ function FPI(ctx)
     let xarr = [];
     let yarr = [];
 
-    //Array
-    let v = [];
-    for(let i = 0; i < n + 1; ++i)
-    {
-        let line = [];
-        for(let j = 0; j < m +1; ++j)
-        {
-            line.push(0);
-        }
-        v.push(line);
-    }
-
     let am1 = parse(m1);
     let am2 = parse(m2);
     let am3 = parse(m3);
     let am4 = parse(m4);
 
     let k = (d - b) / m;
+    let h = (c - a) / n;
+
+    let v = getArray(n,m,fill,am1,am2,am3,am4,a,b,c,d,h,k);
+
     for(let j = 0; j < m + 1; ++j)
     {
         v[0][j] = eval(am1, {x : a, y : j * k + b, Math});
@@ -111,7 +106,6 @@ function FPI(ctx)
         yarr.push(j * k + b);
     }
 
-    let h = (c - a) / n;
     for(let i = 0; i < n + 1; ++i)
     {
         v[i][0] = eval(am2, {x : i * h + a, y : b, Math});

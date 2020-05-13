@@ -258,3 +258,49 @@ input.half-r {
 #i20{
     color: #0c0c0c;
 }
+
+.fiil-mode-switcher  {
+    display: flex;
+
+    margin-top: 30px;
+    user-select: none;
+}
+
+.left-s-button, .right-s-button {
+
+    flex: 16;
+
+    width: 16px;
+    height: 16px;
+
+    line-height: 16px;
+    border-radius: 3px;
+
+    background: #292929;
+
+    color: #ffffff;
+    text-align: center;
+
+    user-select: none;
+    cursor: pointer;
+
+    font-weight: 500;
+
+    font-size: 14px;
+}
+
+.left-s-button:hover, .right-s-button:hover
+{
+    background: #5c5c5c;
+}
+
+.fiil-mode-text {
+    flex: 178;
+
+    text-align: center;
+    margin-top: -3px;
+}
+
+.oblast {
+    width: 210px;
+}
