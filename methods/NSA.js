@@ -17,10 +17,13 @@ function interface(ctx)
 
         let af = parse(ctx.real);
         let max = -100;
-        for(let i = 1; i < m; ++i)
+        for(let i = 1; i < m*3 + 6; ++i)
         {
-            for(let j = 1; j < n; ++j)
+            for(let j = 1; j < n*3 + 6; ++j)
             {
+                if(r.chart.z[i][j] == 0) // Не может быть в конкретной задаче
+                    continue;
+
                 let f = eval(af,{x : r.chart.x[j],y : r.chart.y[i], Math})
                 max = Math.max(max, Math.abs(f - r.chart.z[i][j]));
             }
@@ -54,6 +57,7 @@ function interface(ctx)
         return r1;
     }
 }
+
 
 function NSA(ctx)
 {    
@@ -101,6 +105,20 @@ function NSA(ctx)
     let h = (c - a) / n;
 
     let v = getArray(n,m,fill,am1,am2,am3,am4,a,b,c,d,h,k);
+
+    let mask = [];
+    for(let i = 0; i < n+1; ++i)
+    {
+        let line = [];
+        for(let j = 0; j < m+1; ++j)
+            line.push(true);
+        
+        mask.push(line);
+    }
+
+    for(let j = 2 + multm * 1; j <  4 + multm * 2 + 1; ++j)
+        for(let i = 2 + multn *1; i < 4 + multn*2 + 1; ++i)
+            mask[i][j] = false;
 
     for(let j = 0; j < m + 1; ++j)
     {
@@ -220,6 +238,9 @@ function NSA(ctx)
         {
             for(let j = 1; j < m; ++j)
             {
+                if(!mask[i][j])
+                    continue;
+
                 let f = eval(aff,{x : a + i * h, y : b + j * k, Math});
                 res[i][j] = a2 * left[i][j] +
                     h2 * (left[i-1][j] + left[i+1][j]) +
@@ -242,6 +263,9 @@ function NSA(ctx)
         {
             for(let j = 0; j < m +1; ++j)
             {
+                if(!mask[i][j])
+                    continue;
+
                 res[i][j] = -left[i][j] + betta * right[i][j];
             }
         }
