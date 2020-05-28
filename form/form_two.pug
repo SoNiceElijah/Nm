@@ -1,0 +1,101 @@
+html
+    head
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        style
+            include ./form_two.css
+
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" ></script>
+
+        title Лабораторная работа
+    body
+        .maximum
+            .frame 
+                .title
+                    .variant(title="Вариант") 8
+                    .big-one КОМАНДА БЕЗРУКОВА
+                    .small-one Безруков Колегов Полегайко Бобык
+
+                .left-big
+                    h1 Параметры
+                    
+                    .input-title Функция
+                    label.super-radio Тестовая
+                        input#f1(type="radio", checked, name="f")
+                        span.checkmark
+                    label.super-radio sin(e<sup>x</sup>)
+                        input#f2(type="radio",  name="f")
+                        span.checkmark
+                    label.super-radio sin(e<sup>x</sup>) + cos(10x)
+                        input#f3(type="radio", name="f")
+                        span.checkmark
+
+                    .input-title Производная
+                    label.super-radio Функция
+                        input#w1(type="radio", checked, name="w")
+                        span.checkmark
+                    label.super-radio Первая
+                        input#w2(type="radio", name="w")
+                        span.checkmark
+                    label.super-radio Вторая
+                        input#w3(type="radio", name="w")
+                        span.checkmark
+
+                    .input-title Число разбиений
+                    input#n(type="text", value="2")
+
+                    .input-title S''(a) = 
+                    input#sa(type="text", value="0")
+                    .input-title S''(b) = 
+                    input#sb(type="text", value="0")
+
+                    .button#go Запуск
+
+                .center-big
+                    .chart#chart
+
+                .right-big
+                    .switches
+                        label.sw 
+                            input#k1(type="radio", name="sw", checked)
+                            .sw-b Коэффициенты
+                            .content
+                                table#table
+                                    tr
+                                        th i
+                                        th x<sub>i</sub>
+                                        th x<sub>i+1</sub>
+                                        th a<sub>i</sub>
+                                        th b<sub>i</sub>
+                                        th c<sub>i</sub>
+                                        th d<sub>i</sub>
+                        label.sw 
+                            input#k2(type="radio", name="sw")
+                            .sw-b Сетка 4N
+                            .content
+                                table#stat
+                                    tr
+                                        th i
+                                        th x<sub>i</sub>
+                                        th f(x<sub>i</sub>)
+                                        th S(x<sub>i</sub>)
+                                        th |f - S|
+                                        th f'(x<sub>i</sub>)
+                                        th S'(x<sub>i</sub>)
+                                        th |f' - S'|
+                        label.sw 
+                            input#k3(type="radio", name="sw")
+                            .sw-b Статистика
+                            .content
+
+                                h1 Максимум | f(x) - s(x) |
+                                p#maxf 0.15
+                                h1 Максимум | f'(x) - s'(x) |
+                                p#maxf_ 0.15
+
+
+
+
+        script
+            include ./form_two.js

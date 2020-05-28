@@ -13,6 +13,14 @@ app.get('/', async (req,res) => {
     res.render('form');
 });
 
+app.get('/one', async (req,res) => {
+    res.render('form_one');
+});
+
+app.get('/two', async (req,res) => {
+    res.render('form_two');
+});
+
 app.get('/picture.png', (req,res) => {
     res.sendFile(__dirname + '/picture.png');
 })
