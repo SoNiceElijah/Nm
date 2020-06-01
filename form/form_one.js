@@ -190,7 +190,10 @@ function run(values, id)
         console.log(answer);
         Plotly.newPlot('chart', [answer.chart], layout);
 
-        buildTable(answer.chart.z,answer.chart.x,answer.chart.y);
+        buildTable('data',answer.chart.z,answer.chart.x,answer.chart.y);
+        buildTable('super',answer.report.c1,answer.chart.x,answer.chart.y);
+        buildTable('delta',answer.report.c2,answer.chart.x,answer.chart.y);
+
         buildStat(answer.stat);
 
         console.log(answer.info); 
@@ -201,10 +204,10 @@ function run(values, id)
     })
 }
 
-function buildTable(data,x,y_list)
+function buildTable(id,data,x,y_list)
 {
     data.reverse();
-    $('#data').html('');
+    $('#' + id).html('');
 
     let table = document.createElement('table');
     let count = 1;
@@ -249,7 +252,7 @@ function buildTable(data,x,y_list)
         table.append(tr);
     }
 
-    $('#data').append(table);
+    $('#' + id).append(table);
 }
 
 function buildStat(data)

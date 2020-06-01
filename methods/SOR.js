@@ -16,16 +16,31 @@ function interface(ctx)
 
         let af = parse(ctx.real);
         let max = -100;
-        for(let i = 1; i < m; ++i)
+
+        let superZ = [];
+        let normZ = [];
+
+        for(let i = 0; i < m+1; ++i)
         {
-            for(let j = 1; j < n; ++j)
+            let lineS = [];
+            let lineN = [];
+
+            for(let j = 0; j < n+1; ++j)
             {
                 let f = eval(af,{x : r.chart.x[j],y : r.chart.y[i], Math})
+                lineS.push(f);
+                lineN.push(Math.abs(f - r.chart.z[i][j]));
                 max = Math.max(max, Math.abs(f - r.chart.z[i][j]));
             }
+            superZ.push(lineS);
+            normZ.push(lineN);
         }
 
         r.stat['norm'] = { name : "|v - u|", val : max.toExponential(3) };
+        r.report = {
+            c1 : superZ,
+            c2 : normZ,
+        }
         return r;
     }        
     else
@@ -40,16 +55,32 @@ function interface(ctx)
 
         let r2 = SOR(ctx);
 
+        let superZ = [];
+        let normZ = [];
+
         let max = -100;
-        for(let i = 1; i < m; ++i)
+        for(let i = 0; i < m+1; ++i)
         {
-            for(let j = 1; j < n; ++j)
+            let lineS = [];
+            let lineN = [];
+
+            for(let j = 0; j < n+1; ++j)
             {
+                lineS.push(r2.chart.z[i*2][j*2]);
+                lineN.push(Math.abs(r2.chart.z[i*2][j*2] - r1.chart.z[i][j]));
+
                 max = Math.max(max, Math.abs(r2.chart.z[i*2][j*2] - r1.chart.z[i][j]));
             }
+
+            superZ.push(lineS);
+            normZ.push(lineN);
         }
 
         r1.stat['norm'] = { name : "|v2 - v|", val : max.toExponential(3) };
+        r1.report = {
+            c1 : superZ,
+            c2 : normZ,
+        }
         return r1;
     }
 }
