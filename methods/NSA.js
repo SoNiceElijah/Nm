@@ -322,10 +322,14 @@ function NSA(ctx)
     {
         for(let j = 1; j < m; ++j)
         {
+            if(!mask[i][j])
+                continue;
+
             let f = eval(af,{x : a + i * h, y : b + j * k, Math});
             let left = (h2 * (v[i + 1][j] + v[i - 1][j]) + k2 * (v[i][j + 1] + v[i][j - 1]));
             left += a2 * (v[i][j]);
-            diff = Math.max(diff, Math.abs(f - left));
+            let dd = f + left;
+            diff = Math.max(diff, Math.abs(dd));
         }
     }
 
