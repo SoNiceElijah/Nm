@@ -195,7 +195,7 @@ function FPI(ctx)
         ++num;
     }
 
-    let diff = -100;
+    let diff = 0;
     for(let i = 1; i < n; ++i)
     {
         for(let j = 1; j < m; ++j)
@@ -204,10 +204,11 @@ function FPI(ctx)
             let left = (h2 * (v[i + 1][j] + v[i - 1][j]) + k2 * (v[i][j + 1] + v[i][j - 1]));
             left += a2 * (v[i][j]);
             let dd = f + left;
-            diff = Math.max(diff, Math.abs(dd));
+            diff += dd * dd;
         }
     }
 
+    diff = Math.sqrt(diff);
     v = transpose(v);
 
     return {
