@@ -161,9 +161,6 @@ function Spline()
             betta[i] * h) / (-4.0 * h - alpha[i] * h));
     }
 
-    console.log(alpha);
-    console.log(betta);
-
     for(let i = 0; i < n; ++i)
     {
         info.C.push(0);
@@ -182,7 +179,6 @@ function Spline()
         info.B.push((info.A[i] - info.A[i-1])/h + h*(2*info.C[i] + info.C[i-1])/6);
         info.D.push((info.C[i] - info.C[i-1])/h); 
     }
-
 
 }
 
