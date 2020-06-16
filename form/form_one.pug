@@ -30,17 +30,17 @@ html
 
 
                         //real function
-                        input#rfunc(type="hidden" value="Math.abs(x-y)")
+                        input#rfunc(type="hidden" value="-Math.sin(Math.PI*x*y)*Math.sin(Math.PI*x*y)")
 
-                        input#rm1(type="hidden" value="Math.sin(Math.PI*y)*Math.sin(Math.PI*y)")
-                        input#rm2(type="hidden" value="x * (1 - x )")
-                        input#rm3(type="hidden" value="Math.abs(Math.exp(Math.sin(Math.PI*y))- 1 )")
-                        input#rm4(type="hidden" value="x * (1 - x) * Math.exp(x)")
+                        input#rm1(type="hidden" value="Math.sin(Math.PI*y)")
+                        input#rm2(type="hidden" value="x - x*x")
+                        input#rm3(type="hidden" value="Math.sin(Math.PI*y)")
+                        input#rm4(type="hidden" value="x - x*x")
 
                         input#ra(type="hidden" value="0")
                         input#rb(type="hidden" value="0")
                         input#rc(type="hidden" value="1")
-                        input#rd(type="hidden" value="2")
+                        input#rd(type="hidden" value="1")
                         input#rtype(type="hidden", value="real")
 
                         //test function
@@ -62,7 +62,7 @@ html
                         input#ea(type="hidden" value="0")
                         input#eb(type="hidden" value="0")
                         input#ec(type="hidden" value="1")
-                        input#ed(type="hidden" value="2")
+                        input#ed(type="hidden" value="1")
 
                         input#etype(type="hidden", value="test")
                         input#ereal(type="hidden", value="Math.exp(Math.pow(Math.sin(Math.PI*x*y),2))")
